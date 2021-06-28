@@ -10,7 +10,8 @@
         "main.blocks",
         "main.ts",
         "README.md",
-        "Quadruped.ts"
+        "Quadruped.ts",
+        "_locales/zh-CN/Quadruped-strings.json"
     ],
     "testFiles": [
         "test.ts"
