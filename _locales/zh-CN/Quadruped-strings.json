@@ -1,4 +1,6 @@
 {
-    "Robot|block": "机器人",
-    "Robot.init|block": "初始化"
+    "Quadruped|block": "四足",
+    "Quadruped.init|block": "初始化",
+    "Basic_control|block":"基本控制",
+    "control":"控制"
 }
