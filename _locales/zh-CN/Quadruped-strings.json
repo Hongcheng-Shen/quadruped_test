@@ -1,1 +1,4 @@
-1111111111
+{
+    "Robot|block": "机器人",
+    "Robot.init|block": "初始化"
+}
