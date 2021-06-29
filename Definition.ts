@@ -31,6 +31,7 @@ function SPI_Init() {
     pins.spiPins(DigitalPin.P15, DigitalPin.P14, DigitalPin.P13)
     pins.spiFrequency(1000000)
     led.enable(false)
+    //serial.writeNumber(1)
 }
 
 //########SPI data transmission/reception||SPI数据发送/接收
@@ -49,6 +50,7 @@ function SPI_Send() {
         //serial.writeBuffer(ToSlaveBuf)
         SPI_unpacking()
         basic.pause(50)
+        //serial.writeNumber(2)
     }
 }
 //########Control data||控制数据

@@ -72,6 +72,7 @@ namespace Quadruped {
         gait_mode = 4
         state = 1
         basic.pause(3000)
+        //serial.writeNumber(3)
         while (1) {
             SPI_Send()
             if (robot_mode == 1) {
@@ -81,6 +82,7 @@ namespace Quadruped {
                 }
                 return
             }
+            //serial.writeNumber(4)
         }
     }
     //###Quadruped Stand||站立
@@ -121,6 +123,7 @@ namespace Quadruped {
     //% blockId=Quadruped_Heartbeat block="Heartbeat"
     export function Heartbeat(): void {
         SPI_Send()
+        serial.writeNumber(10)
     }
     //###Stop||停止
     /**
