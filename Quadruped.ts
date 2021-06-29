@@ -5,37 +5,49 @@
 
 
 /**
- * robot blocks
+ * Quadruped
  */
 //% weight= 0 color=#0abcff icon="\uf207" block="Quadruped"
-//% groups='["control","Advanced"]'
+//% groups='["Set up","control"]'
 namespace Quadruped {
+
     /**
-     * TODO: describe your function here
-     * @param n describe parameter here, eg: 5
-     * @param s describe parameter here, eg: "Hello"
-     * @param e describe parameter here
+     *TODO:SPI and data initialization before startup，No return value
      */
-    //% group="control"
+    //% group="Set up"
     //% blockGap=8
     //% blockId=Quadruped_init block="Quadruped init"
     export function init(): void {
-        let i = 0
-        // Add code here
+        SPI_Init()
     }
+
     /**
-    * TODO: describe your function here
-     * @param n describe parameter here, eg: 5
-    * @param s describe parameter here, eg: "Hello"
-    * @param e describe parameter here
+    * TODO:Chassis feedback information, return hexadecimal number
     */
-    //% group="Advanced"
+    //% group="control"
     //% blockGap=8
-    //% blockId=Quadruped_aa block="aa"
-    export function aa(): void {
-        let i = 0
-        // Add code here
+    //% blockId=Quadruped_Status block="Quadruped Status"
+    export function Status(): number {
+        return robot_mode;
     }
+
+    /**
+     *TODO:Control speed direction, angle reset (value is 0)
+     */
+    //% group="control"
+    //% blockGap=8
+    //% blockId=Quadruped_Reset block="Quadruped Reset"
+    export function Reset(): void {
+        rc_spd_cmd_X = 0.00 //x_speed
+        rc_spd_cmd_y = 0.00 //y_speed
+        rc_att_rate_cmd = 0.00 // Turn to speed
+        rc_spd_cmd_z = 0.00 //Altitude speed
+        //rc_pos_cmd = 0.00 //height
+        rc_att_cmd_x = 0.00 //Pitch
+        rc_att_cmd_y = 0.00 //Side swing
+        rc_att_cmd = 0.00 //Heading
+    }
+
 
     /**
      * TODO: describe your function here
