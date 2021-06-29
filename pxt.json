@@ -12,7 +12,8 @@
         "README.md",
         "Quadruped.ts",
         "_locales/zh-CN/Quadruped-strings.json",
-        "Definition.ts"
+        "Definition.ts",
+        "Options.ts"
     ],
     "testFiles": [
         "test.ts"
