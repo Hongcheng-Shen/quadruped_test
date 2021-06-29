@@ -29,3 +29,13 @@ enum Mov_ang {
     //% block="Yaw_right"
     Yaw_r
 }
+
+//############Movement gait||运动步态
+enum gait {
+    //% block="Trot"
+    Trot,
+    //% block="Run_fast"
+    Run_fast,
+    //% block="Crawl"
+    Crawl
+}

@@ -1,6 +1,19 @@
 {
-    "Quadruped|block": "四足",
-    "Quadruped.init|block": "初始化",
+    "Quadruped|block":"四足",
+    "Quadruped.init|block":"初始化",
     "Basic_control|block":"基本控制",
-    "control":"控制"
+    "control":"控制",
+    "Quadruped.Status|block":"返回状态信息",
+    "Quadruped.Reset|block":"复位",
+    "Quadruped.Stop|block": "停止",
+    "Quadruped.Stand|block": "站立",
+    "Quadruped.Start|block": "启动",
+    "Quadruped.Heartbeat|block": "心跳",
+    "Quadruped.Fall_re|block": "摔倒恢复",
+    "Quadruped.Height|block":"高度 %h",
+    "Quadruped.Gait|block": "步态 %g",
+    "Quadruped.Control_s|block":"控制 |%m| 速度 %speed1 |时间 %time1",
+    "Quadruped.Control_a|block":"控制 | %m| 角度 %speed1 |时间 %time1"
+
+
 }
