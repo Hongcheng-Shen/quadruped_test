@@ -11,7 +11,8 @@
         "main.ts",
         "README.md",
         "Quadruped.ts",
-        "_locales/zh-CN/Quadruped-strings.json"
+        "_locales/zh-CN/Quadruped-strings.json",
+        "Definition.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -23,5 +24,5 @@
     "supportedTargets": [
         "microbit"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
