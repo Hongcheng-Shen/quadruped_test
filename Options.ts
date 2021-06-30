@@ -90,3 +90,63 @@ enum Unit{
     //% block="inches"
     Inches
 }
+
+//Position value||位置值
+enum Position{
+    //% block="X axis"
+    X_axis,
+    //% block="Y axis"
+    Y_axis,
+    //% block="Z axis"
+    Z_axis,
+    //% block="X axis flip"
+    X_flip,
+    //% block="Y axis flip"
+    Y_flip,
+    //% block="Z axis flip"
+    Z_flip,
+}
+
+//Ball position||球的位置值
+enum Ball_Position{
+    //% block="X axis"
+    X_axis,
+    //% block="Y axis"
+    Y_axis,
+    //% block="Width "
+    Width,
+    //% block="Depth "
+    Depth,
+    //% block="Recognition effect"
+    Re_effect
+}
+
+//Line inspection||巡线
+enum Line_Position {
+    //% block="status"
+    status,
+    //% block="Recognition_effect"
+    Re_effect,
+    //% block="Deviation_angle"
+    De_angle,
+    //% block="Deviation_position"
+    De_position
+}
+
+//colour||颜色
+enum enColor{
+    //%  block="Red"
+    Red,
+    //%  block="Green"
+    Green,
+    //% block="Blue"
+    Blue,
+    //%  block="White"
+    White,
+    //%  block="Cyan"
+    Cyan,
+    //%  block="Pinkish"
+    Magenta,
+    //%  block="Yellow"
+    Yellow,
+}

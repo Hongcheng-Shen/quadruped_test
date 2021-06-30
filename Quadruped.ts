@@ -8,7 +8,7 @@
  * Quadruped
  */
 //% weight= 0 color=#0abcff icon="\uf207" block="Quadruped"
-//% groups='["Set up","control","Ultrasound"]'
+//% groups='["Set up","control","Additional steering gear control"]'
 namespace Quadruped {
 
     /**
@@ -369,18 +369,121 @@ namespace Quadruped {
         }
         return date;
     }
+
     //###Select_gesture_as||选择手势为
     /**
     * IODO:Select gesture as,Return the corresponding value||选择手势为，返回对应值
     */
     //% subcategory=sensor
     //% blockGap=8
-    //% blockId=sensor_GetGesture block="Select_gesture_as | %state"
+    //% blockId=sensor_Select_gesture_as block="Select_gesture_as | %state"
     export function Select_gesture_as(state: gesture): number {
         return state;
     }
 
+    //###Steering gear control||舵机控制
+    /**
+    * IODO:The servo number is the same as the pin number, PWM is for the angle, the rotation speed (0 fast -9 slow)
+    * IODO：舵机号与引脚号相同，PWM为角度，转速（0快-9慢）
+    */
+    //% group="Additional steering gear control"
+    //% blockGap=8
+    //% h.min=0 h.max=3
+    //% pwm.min=500 pwm.max=2500
+    //% Gap.min=0 Gap.max=9
+    //% blockId=sensor_Steering_gear block="Steering_gear| %h | PWM_value %pwm|Rotation speed %Gap"
+    export function Steering_gear(h: number, pwm: number, Gap: number) {
+        usb_send_cnt_1 = 0;
 
+        ToSlaveBuf_1[usb_send_cnt_1++] = DaHeader_1; //head
+        ToSlaveBuf_1[usb_send_cnt_1++] = SSLen - 2; //Fixed length
+        ToSlaveBuf_1[usb_send_cnt_1++] = 2;  //function code
+
+        ToSlaveBuf_1[usb_send_cnt_1++] = h;
+        ToSlaveBuf_1[usb_send_cnt_1++] = pwm >> 8;
+        ToSlaveBuf_1[usb_send_cnt_1++] = (pwm << 8) >> 8;
+        ToSlaveBuf_1[usb_send_cnt_1++] = Gap;
+
+        ToSlaveBuf_1[SSLen - 1] = DaTail_1;//Fixed length
+
+        SG_SPI_Send()
+    }
+
+    //###Image recognition initialization||图像识别初始化
+    /**
+    * IODO:Initial communication
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Image_ini block="Image recognition initialization"
+    export function Image_init() {
+        serial.setRxBufferSize(32)
+    }
+
+    //###QR code position return value||二维码位置返回值
+    /**
+    * IODO:Initial communication
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_QR_return block="QR code position return value| %data"
+    export function QR_return(data: Position): number {
+        Identify_send()
+        Identify_receive()
+        switch (data) {
+            case Position.X_axis: return Identify_x; break;
+            case Position.Y_axis: return Identify_x; break;
+            case Position.Z_axis: return Identify_x; break;
+            case Position.X_flip: return Identify_x; break;
+            case Position.Y_flip: return Identify_x; break;
+            case Position.Z_flip: return Identify_x; break;
+            default: return 255
+        }
+    }
+
+    //###Line patrol return||巡线返回
+    /**
+    * IODO:Line patrol identification returns the corresponding value
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Line_return block="Line patrol return value| %x"
+    export function Line_return(X: Line_Position): number {
+        Function_c = 0x40
+        Function_s = 3
+        Identify_send()
+        Identify_receive()
+        switch (X) {
+            case Line_Position.status: return Line_detect;
+            case Line_Position.Re_effect: return Line_effect;
+            case Line_Position.De_angle: return Line_angle;
+            case Line_Position.De_position: return Line_position;
+            default: return 255
+        }
+    }
+
+    //###Ball return value||小球返回值
+    /**
+    * IODO:Identify the ball return value
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Ball_return block="Ball returnvalue| %P"
+    export function Ball_return(P: Ball_Position):number{
+        Function_c = 0x24
+        Function_s = 2
+        Identify_send()
+        Identify_receive()
+        switch(P){
+            case Ball_Position.X_axis: return Ball_X
+            case Ball_Position.Y_axis: return Ball_Y
+            case Ball_Position.Width: return Ball_W
+            case Ball_Position.Depth: return Ball_H
+            case Ball_Position.Re_effect: return Ball_pixels
+            default: return 255
+        }
+
+    }
 
 
 
