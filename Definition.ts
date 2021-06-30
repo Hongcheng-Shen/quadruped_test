@@ -95,6 +95,14 @@ let speed_A = 0.000 //Angle speed output
 let time = 0.00
 
 
+//########Speech Recognition||语音识别
+let get_data = 0x00 //retrieve data
+let voice_speed = 7 //speed
+
+
+
+
+
 
 //########SPI_int||SPI初始化
 function SPI_Init() {
@@ -271,6 +279,55 @@ function Line_inspection(Identify_RX_1: any) {
     Line_effect = Data_conversion(Identify_RX_2[cnt_I++], Identify_RX_2[cnt_I++]) //The effect of the identification line
     Line_angle = Data_conversion(Identify_RX_2[cnt_I++], Identify_RX_2[cnt_I++]) //angle
     Line_position = Data_conversion(Identify_RX_2[cnt_I++], Identify_RX_2[cnt_I++])//position
+
+}
+
+//Voice recognition reception||语音识别接收
+function voice_rx() {
+    let rx_data = pins.createBuffer(4) //Create an array
+    rx_data = serial.readBuffer(0) //Read data in RX buffer
+    if (rx_data[0] == 0xF4 && rx_data[1] == 0x06 && rx_data[3] == 0xff) {
+        get_data = rx_data[2]
+    }
+}
+
+//Voice initialization||语音初始化
+function Voice_init() {
+    Quadruped.init()
+    Quadruped.Height(10)
+    Quadruped.Start()
+}
+
+//Voice data analysis||语音数据解析
+function voice_data() {
+    
+    switch (get_data) {
+        case 0x02: Voice_init();break;
+        case 0x03: Quadruped.Stop();break;
+        case 0x04: Quadruped.Reset;Quadruped.Stand();break;
+        case 0x05: Quadruped.Reset;Quadruped.Gait(gait.Trot); break;
+        case 0x06: Quadruped.Reset;Quadruped.Gait(gait.Crawl); break;
+        case 0x07: Quadruped.Height(10); break;
+        case 0x08: Quadruped.Height(4); break;
+        case 0x09: Quadruped.Reset; Quadruped.Control_s(Mov_dir.For, voice_speed, 50) ;break;
+        case 0x0A: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Bac, voice_speed, 50); break;
+        case 0x0B: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Turn_l, voice_speed, 50); break;
+        case 0x0C: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Turn_r, voice_speed, 50); break;
+        case 0x0D: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Shift_l, voice_speed, 50); break;
+        case 0x0E: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Shift_r, voice_speed, 50); break;
+        case 0x0F: Quadruped.Reset; Quadruped.Control_s(Mov_dir.For, voice_speed, 0); Quadruped.Control_s(Mov_dir.Shift_l, voice_speed, 50); break;
+        case 0x10: Quadruped.Reset; Quadruped.Control_s(Mov_dir.Bac, voice_speed, 0); Quadruped.Control_s(Mov_dir.Shift_l, voice_speed, 50); break;
+        case 0x11: Quadruped.Reset; Quadruped.Control_s(Mov_dir.For, voice_speed, 0); Quadruped.Control_s(Mov_dir.Shift_r, voice_speed, 50); break;
+        case 0x12: Quadruped.Stand(); Quadruped.Control_s(Mov_dir.For, voice_speed, 0); Quadruped.Control_s(Mov_dir.Shift_l, voice_speed, 50); break;
+        case 0x13: voice_speed++; break;
+        case 0x14: voice_speed--; break;
+        case 0x15: Quadruped.Reset; Quadruped.Control_a(Mov_ang.Look_d, 10, 20); break;
+        case 0x16: Quadruped.Reset; Quadruped.Control_a(Mov_ang.Look_u, 10, 20); break;
+        case 0x17: Quadruped.Reset; Quadruped.Control_a(Mov_ang.L_swing, 10, 20); break;
+        case 0x18: Quadruped.Reset; Quadruped.Control_a(Mov_ang.R_swing, 10, 20); break;
+        default: return
+
+    }
 
 }
 

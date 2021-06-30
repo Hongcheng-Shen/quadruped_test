@@ -25,6 +25,7 @@
     "Quadruped.QR_return|block": "二维码位置返回值 | %data",
     "Quadruped.Ball_return|block": "小球返回值 | %P",
     "Quadruped.Line_return|block": "巡线返回值 | %X",
+    "Quadruped.Voice|block": "语音识别开启",
     "gait.Trot|block": "小跑",
     "obstacle_t.Obstacle|block":"障碍",
     "obstacle_t.No_Obstacle|block":"无障碍",

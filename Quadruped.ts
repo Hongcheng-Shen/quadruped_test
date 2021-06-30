@@ -123,7 +123,7 @@ namespace Quadruped {
     //% blockId=Quadruped_Heartbeat block="Heartbeat"
     export function Heartbeat(): void {
         SPI_Send()
-        serial.writeNumber(10)
+        //serial.writeNumber(10)
     }
     //###Stop||停止
     /**
@@ -485,8 +485,17 @@ namespace Quadruped {
 
     }
 
-
-
+    //###Voice recognition turned on||语音识别开启
+    /**
+    * IODO:Voice recognition turned on
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Voicen block="Voice recognition turned on"
+    export function Voice():void {
+        voice_rx()
+        voice_data()
+    }
 
 
 
