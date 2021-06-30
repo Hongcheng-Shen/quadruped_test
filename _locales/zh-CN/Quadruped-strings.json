@@ -13,7 +13,41 @@
     "Quadruped.Height|block":"高度 %h",
     "Quadruped.Gait|block": "步态 %g",
     "Quadruped.Control_s|block":"控制 |%m| 速度 %speed1 |时间 %time1",
-    "Quadruped.Control_a|block":"控制 | %m| 角度 %speed1 |时间 %time1"
+    "Quadruped.Control_a|block":"控制 | %m| 角度 %speed1 |时间 %time1",
+    "Quadruped.Ultrasound|block": "超声波 | 发射 %trig |接收 %echo |单位 %unit",
+    "Quadruped.Infrared|block": "红外传感器 | 接收 %pin |模式 %value",
+    "Quadruped.Human_induction|block": "人体感应 | 接收 %pin |模式 %value",
+    "Quadruped.GestureInit|block": "手势初始化",
+    "Quadruped.GetGesture|block": "获取手势值",
+    "Quadruped.Select_gesture_as|block": "选择手势为 | %state",
+    "gait.Trot|block": "小跑",
+    "obstacle_t.Obstacle|block":"障碍",
+    "obstacle_t.No_Obstacle|block":"无障碍",
+    "obstacle_p.Someone|block": "有人",
+    "obstacle_p.Unmanned|block": "无人",
+    "Mov_dir.For|block": "前进",
+    "Mov_dir.Bac|block": "后退",
+    "Mov_dir.Turn_l|block": "左转",
+    "Mov_dir.Turn_r|block": "右转",
+    "Mov_dir.Shift_l|block": "左移",
+    "Mov_dir.Shift_r|block": "右移",
+    "Mov_ang.L_swing|block": "左摆",
+    "Mov_ang.R_swing|block": "右摆",
+    "Mov_ang.Look_d|block": "低头",
+    "Mov_ang.Look_u|block": "抬头",
+    "Mov_ang.Yaw_l|block": "左扭",
+    "Mov_ang.Yaw_r|block": "右扭",
+    "gesture.right|block": "从左到右",
+    "gesture.left|block": "从右到左",
+    "gesture.up|block": "从下往上",
+    "gesture.down|block": "从上往下",
+    "gesture.forward|block": "从后往前",
+    "gesture.clockwise|block": "顺时针",
+    "gesture.wave|block": "挥手"
+
+
+
+
 
 
 }

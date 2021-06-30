@@ -39,3 +39,54 @@ enum gait {
     //% block="Crawl"
     Crawl
 }
+
+//############Infrared||红外
+enum obstacle_t{
+    // block="Obstacle"
+    Obstacle = 0,
+    // block="No obstacle"
+    No_Obstacle = 1
+
+}
+
+//############Human body induction||人体感应
+enum obstacle_p {
+    // block="Someone"
+    Someone = 500,
+    // block="unmanned"
+    Unmanned = 0
+
+}
+
+//############gesture||手势
+enum gesture{
+   //% block="From left to right"
+    right = 1,
+    //% block="Right to left"
+    left = 2,
+    //% block="Bottom up"
+    up = 4,
+    //% block="From top to bottom"
+    down = 8,
+    //% block="Back to front"
+    forward = 16,
+    //% block="From front to back"
+    backward = 32,
+    //% block="Clockwise"
+    clockwise = 64,
+    //% block="Counterclockwise"
+    count_clockwise = 128,
+    //% block="Wave"
+    wave = 256
+    
+}
+
+//############Ultrasound||超声波
+enum Unit{
+    //% block="μs"
+    MicroSeconds,
+    //% block="cm"
+    Centimeters,
+    //% block="inches"
+    Inches
+}

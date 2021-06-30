@@ -8,7 +8,7 @@
  * Quadruped
  */
 //% weight= 0 color=#0abcff icon="\uf207" block="Quadruped"
-//% groups='["Set up","control"]'
+//% groups='["Set up","control","Ultrasound"]'
 namespace Quadruped {
 
     /**
@@ -263,14 +263,129 @@ namespace Quadruped {
             //basic.pause(50)
         }
     }
-
+    //###Ultrasound||超声波
     /**
-     * TODO: describe your function here
-     * @param value describe value here, eg: 5
-     */
+    * TODO:Select the transmitting pin, receiving pin, and the distance unit that has been returned
+    * @param trig： Select transmit pin（P0-P3）
+    * @param echo： Select receiving pin（P0-P3）
+    * @param unit： Select unit: us, cm, inches
+    */
     //% subcategory=sensor
-    //% blockId=BitBot_Model block="bb"
-    export function fib(value: number): number {
-        return value <= 1 ? value : fib(value - 1) + fib(value - 2);
+    //% blockGap=8
+    //% blockId=sensor_Model block="Ultrasound |tr %trig |re %echo | unit %unit"
+    export function Ultrasound(trig: DigitalPin, echo: DigitalPin, unit: Unit, maxCmDistance = 500): number {
+        // send pulse
+        maxCmDistance = 500
+        pins.setPull(trig, PinPullMode.PullNone);
+        pins.digitalWritePin(trig, 0);
+        control.waitMicros(2);
+        pins.digitalWritePin(trig, 1);
+        control.waitMicros(10);
+        pins.digitalWritePin(trig, 0);
+        // read pulse
+        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+        switch (unit) {
+            case Unit.Centimeters: return Math.idiv(d, 58);
+            case Unit.Inches: return Math.idiv(d, 148);
+            default: return d;
+        }
     }
+    //###Infrared||红外
+   /**
+    * TODO:Select the receiving pin, return 1 if there is an obstacle, 0 return if there is no
+    * @param pin：Select the receiving pin (P0-P3)
+    * @param pin：Select mode
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Infrared block="Infrared |mode %value |pin %pin"
+    export function Infrared(pin: DigitalPin, value: obstacle_t,): boolean {
+        pins.setPull(pin, PinPullMode.PullUp);
+        return pins.digitalReadPin(pin) == value;
+    }
+    //###Human body induction||人体感应
+    /**
+    * TODO:Receive pin selection, some people return 1 and no one returns 0
+    * @param pin：Select the receiving pin (P0-P3)
+    * @param pin：Select mode
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_Human_Infrared block="Human Infrared |pin %pin |mode %value"
+    export function Human_induction(pin: AnalogPin, value: obstacle_p): number {
+        let w = pins.analogReadPin(pin)
+        if (w >= value)
+            return 1
+        return 0
+    }
+    //###GestureInit||手势初始化
+    /**
+    * IODO:Initialize gesture recognition (success: 0 failure: 255)
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_GestureInit block="GestureInit"
+    export function GestureInit(): number {
+        basic.pause(800);//等待芯片稳定
+        if (GestureReadReg(0) != 0x20) {
+            return 0xff;
+        }
+        for (let i = 0; i < Init_Register_Array.length; i++) {
+            GestureWriteReg(Init_Register_Array[i][0], Init_Register_Array[i][1]);
+        }
+        GestureSelectBank(0);
+        for (let i = 0; i < Init_Gesture_Array.length; i++) {
+            GestureWriteReg(Init_Gesture_Array[i][0], Init_Gesture_Array[i][1]);
+        }
+        return 0;
+    }
+    //###GetGesture||获取手势
+    /**
+    * IODO:Get the result value of gesture recognition||获取手势识别的结果值
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_GetGesture block="GetGesture"
+    export function GetGesture(): number {
+
+        let date = GestureReadReg(0x43);
+
+        switch (date) {
+            case GES_RIGHT_FLAG:
+            case GES_LEFT_FLAG:
+            case GES_UP_FLAG:
+            case GES_DOWN_FLAG:
+            case GES_FORWARD_FLAG:
+            case GES_BACKWARD_FLAG:
+            case GES_CLOCKWISE_FLAG:
+            case GES_COUNT_CLOCKWISE_FLAG:
+                break;
+            default:
+                date = GestureReadReg(0x44);
+                if (date == GES_WAVE_FLAG) {
+                    return 256;
+                }
+                break;
+        }
+        return date;
+    }
+    //###Select_gesture_as||选择手势为
+    /**
+    * IODO:Select gesture as,Return the corresponding value||选择手势为，返回对应值
+    */
+    //% subcategory=sensor
+    //% blockGap=8
+    //% blockId=sensor_GetGesture block="Select_gesture_as | %state"
+    export function Select_gesture_as(state: gesture): number {
+        return state;
+    }
+
+
+
+
+
+
+
+
+
 }
