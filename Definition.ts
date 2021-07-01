@@ -15,7 +15,7 @@ let robot_mode_1 = 0
 let state = 0
 
 //########SPI
-let SSLen = 40
+let SSLen = 50
 let InfoTemp = pins.createBuffer(SSLen)
 let ToSlaveBuf = pins.createBuffer(SSLen)
 let SfoCnt = 0
@@ -31,6 +31,26 @@ let usb_send_cnt_1 = 0
 let SfoCnt_1 = 0
 let DaHeader_1 = 0x2B
 let DaTail_1 = 0xEE
+
+//########Joint angle control||关节角度控制
+let ToSlaveBuf_2 = pins.createBuffer(SSLen)
+let InfoTemp_2 = pins.createBuffer(SSLen)
+let usb_send_cnt_2 = 0
+let SfoCnt_2 = 0
+let DaHeader_2 = 0x2B
+let DaTail_2 = 0xEE
+let FL_d = 45.0  
+let FL_x = 90.0
+let FL_c = 0.0
+let FR_d = 45.0
+let FR_x = 90.0
+let FR_c = 0.0
+let HL_d = 45.0
+let HL_x = 90.0
+let HL_c = 0.0
+let HR_d = 45.0
+let HR_x = 90.0
+let HR_c = 0.0
 
 //########Image Identification||图像识别
 //------------definition--------------
@@ -129,8 +149,7 @@ function SPI_Send() {
         //serial.writeBuffer(InfoTemp)
         //serial.writeBuffer(ToSlaveBuf)
         SPI_unpacking()
-        basic.pause(50)
-        //serial.writeNumber(2)
+        basic.pause(1)
     }
 }
 //########Control data||控制数据
@@ -186,10 +205,53 @@ function SG_SPI_Send() {
     for (let i = 0; i < SSLen; i++) {
         InfoTemp_1[i] = pins.spiWrite(ToSlaveBuf_1[i])
     }
-    serial.writeBuffer(ToSlaveBuf_1)
+    //serial.writeBuffer(ToSlaveBuf_1)
     pins.digitalWritePin(DigitalPin.P6, 1)
     pins.digitalWritePin(DigitalPin.P16, 1)
-    basic.pause(200)
+    basic.pause(1)
+}
+
+//########Joint SPI data transmission||关节SPI 数据发送
+function Joint_SPI_Send() {
+
+        Joint_data()
+        pins.digitalWritePin(DigitalPin.P16, 0)
+        pins.digitalWritePin(DigitalPin.P6, 0)
+        for (let i = 0; i < 200; i++);
+        for (let i = 0; i < SSLen; i++) {
+            InfoTemp_2[i] = pins.spiWrite(ToSlaveBuf[i])
+        }
+        pins.digitalWritePin(DigitalPin.P6, 1)
+        pins.digitalWritePin(DigitalPin.P16, 1)
+        //SPI_unpacking()
+        basic.pause(1)
+
+//    }
+}
+
+function Joint_data() {
+    usb_send_cnt = 0
+    let cnt_reg = 0
+    let sum = 0
+    ToSlaveBuf[usb_send_cnt++] = DaHeader_2; //头
+    ToSlaveBuf[usb_send_cnt++] = SSLen - 2; //固定长度
+    ToSlaveBuf[usb_send_cnt++] = 0x03;  //功能码
+
+    ToSlaveBuf[usb_send_cnt++] = 0x01;
+    get_float_hex(FL_d)
+    get_float_hex(FL_x)
+    get_float_hex(FL_c)
+    get_float_hex(FR_d)
+    get_float_hex(FR_x) 
+    get_float_hex(FR_c)
+    get_float_hex(HL_d)
+    get_float_hex(HL_x)
+    get_float_hex(HL_c)
+    get_float_hex(HR_d)
+    get_float_hex(HR_x)
+    get_float_hex(HR_c)
+
+    ToSlaveBuf[SSLen - 1] = DaTail_2;
 }
 
 //Data sending（Image Identification）||数据发送（图像识别）

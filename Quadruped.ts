@@ -8,7 +8,7 @@
  * Quadruped
  */
 //% weight= 0 color=#0abcff icon="\uf207" block="Quadruped"
-//% groups='["Set up","control","Additional steering gear control"]'
+//% groups='["Set up","control","Additional steering gear control","Joint angle control"]'
 namespace Quadruped {
 
     /**
@@ -263,6 +263,26 @@ namespace Quadruped {
             //basic.pause(50)
         }
     }
+
+    //###Joint angle control||关节控制
+    /**
+    * TODO:Angle control of each joint
+    * @param a： angle
+    */
+    //% group="Joint angle control"
+    //% blockGap=8
+    //% blockId=Quadruped_Joint block="Joint angle control | %j|thigh %d|Calf %x|Side led %c| %site "
+    export function Joint(j: Joints, d: number, x: number, c: number, site: sIte):void{
+        switch(j){
+            case Joints.Left_fr: FL_d = d;FL_x = x;FL_c = c;break ;
+            case Joints.Left_hi: HL_d = d; HL_x = x; HL_c = c; break
+            case Joints.Right_fr: FR_d = d; FR_x = x; FR_c = c; break
+            case Joints.Right_hi: HR_d = d; HR_x = x; HR_c = c; break
+        }
+        if(site = 1)
+            Joint_SPI_Send()
+    }
+
     //###Ultrasound||超声波
     /**
     * TODO:Select the transmitting pin, receiving pin, and the distance unit that has been returned

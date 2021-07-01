@@ -26,6 +26,7 @@
     "Quadruped.Ball_return|block": "小球返回值 | %P",
     "Quadruped.Line_return|block": "巡线返回值 | %X",
     "Quadruped.Voice|block": "语音识别开启",
+    "Quadruped.Joint|block":"关节角度 | %j|大腿 %d|小腿 %x|侧腿 %c| %s",
     "gait.Trot|block": "小跑",
     "obstacle_t.Obstacle|block":"障碍",
     "obstacle_t.No_Obstacle|block":"无障碍",
@@ -73,7 +74,11 @@
     "enColor.White|block": "白色",
     "enColor.Cyan|block": "青色",
     "enColor.Magenta|block": "品红色",
-    "enColor.Yellow|block": "黄色"
+    "enColor.Yellow|block": "黄色",
+    "Joints.Left_fr|block": "左前腿",
+    "Joints.Left_hi|block": "左后腿",
+    "Joints.Right_fr|block": "右前腿",
+    "Joints.Right_hi|block": "右后腿"
 
 
 

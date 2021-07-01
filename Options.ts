@@ -150,3 +150,24 @@ enum enColor{
     //%  block="Yellow"
     Yellow,
 }
+
+//Joint settings||关节设置
+enum sIte{
+    //%  block="set up"
+    Set = 1,
+    //%  block="Not set"
+    Not_set = 0,
+
+}
+
+//Joints||关节部位
+enum Joints{
+    //%  block="Left front leg"
+    Left_fr,
+    //%  block="Left hind leg"
+    Left_hi,
+    //%  block="Right front leg"
+    Right_fr,
+    //%  block="Right hind leg"
+    Right_hi,
+}
